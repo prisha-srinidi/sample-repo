@@ -1,3 +1,5 @@
+import csv
+
 class Task:
     def __init__(self, description):
         self.description = description
@@ -27,11 +29,17 @@ class TaskManager:
         else:
             print("Invalid task index.")
 
-    def write_tasks(self):
-        """
-        This method writes the list of tasks to a file
-        """
-        pass
+    def write_tasks(self, filename):
+        tasks = [("Write report", "High"), ("Email client", "Medium")]  # Example data
+
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            for task, priority in tasks:
+                writer.writerow([task, priority])
+    
+
+
+
 
 def main():
     task_manager = TaskManager()
@@ -41,7 +49,8 @@ def main():
         print("1. Add Task")
         print("2. View Tasks")
         print("3. Mark Task as Completed")
-        print("4. Exit")
+        print("4. Dump tasks into a file")
+        print("5. exit")
 
         choice = input("Enter your choice: ")
 
@@ -55,6 +64,9 @@ def main():
             task_index = int(input("Enter task index to mark as completed: "))
             task_manager.mark_task_completed(task_index)
         elif choice == "4":
+            file_name=input("Enter file into which data to be dumped: ")
+            task_manager.write_tasks(file_name)
+        elif choice == "5":
             print("Exiting program.")
             break
         else:
@@ -62,3 +74,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
